@@ -1,6 +1,6 @@
 package com.itextpdf.pdfdsl.functional;
 
-import com.itextpdf.pdfdsl.PdfCompiler;
+import com.itextpdf.pdfdsl.PdfCop;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -380,6 +380,6 @@ public class SnippetTest {
 
     @Test
     public void test() {
-        Assert.assertTrue(new PdfCompiler().compileSnippet(inputPdf));
+        Assert.assertTrue(new PdfCop().doesSnippetFollowTheRules(inputPdf));
     }
 }

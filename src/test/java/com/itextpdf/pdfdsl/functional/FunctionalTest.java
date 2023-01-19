@@ -1,6 +1,6 @@
 package com.itextpdf.pdfdsl.functional;
 
-import com.itextpdf.pdfdsl.PdfCompiler;
+import com.itextpdf.pdfdsl.PdfCop;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -21,24 +21,22 @@ public class FunctionalTest {
     @Parameterized.Parameters
     public static Collection data() {
         return Arrays.asList(new Object[][] {
-                { "src/test/resources/pdfs/input.pdf", 1, true },
-                { "src/test/resources/pdfs/outlook.pdf", 1, true },
-                { "src/test/resources/pdfs/flowcad.pdf", 1, true },
-                { "src/test/resources/pdfs/opensource.pdf", 1, true },
-                { "src/test/resources/pdfs/spunbysorcery.pdf", 3, true },
-                { "src/test/resources/pdfs/inlineimage.pdf", 1, true },
-                { "src/test/resources/pdfs/cmp_fieldsJustificationTest02.pdf", 1, true }
+                { "src/test/resources/pdfs/input.pdf", true },
+                { "src/test/resources/pdfs/outlook.pdf", true },
+                { "src/test/resources/pdfs/flowcad.pdf", true },
+                { "src/test/resources/pdfs/opensource.pdf", false },
+                { "src/test/resources/pdfs/spunbysorcery.pdf", true },
+                { "src/test/resources/pdfs/inlineimage.pdf", true },
+                { "src/test/resources/pdfs/cmp_fieldsJustificationTest02.pdf", true }
         });
     }
 
 
-    private int pageNumber;
     private String inputPdf;
     private boolean pass;
 
-    public FunctionalTest(String inputPdf, int pageNumber, boolean pass) {
+    public FunctionalTest(String inputPdf, boolean pass) {
         this.inputPdf = inputPdf;
-        this.pageNumber = pageNumber;
         this.pass = pass;
     }
 
@@ -48,7 +46,7 @@ public class FunctionalTest {
             this.expectedException.expect(ParseCancellationException.class);
         }
 
-        Assert.assertTrue(new PdfCompiler().compiles(inputPdf, this.pageNumber));
+        Assert.assertTrue(new PdfCop().isDocumentFollowingTheRules(inputPdf));
     }
 
 }
