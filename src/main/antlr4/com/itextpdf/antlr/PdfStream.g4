@@ -1,3 +1,32 @@
+/*
+    Copyright (c) 2023 iText Group NV
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License version 3
+    as published by the Free Software Foundation with the addition of the
+    following permission added to Section 15 as permitted in Section 7(a):
+    FOR ANY PART OF THE COVERED WORK IN WHICH THE COPYRIGHT IS OWNED BY
+    ITEXT GROUP. ITEXT GROUP DISCLAIMS THE WARRANTY OF NON INFRINGEMENT
+    OF THIRD PARTY RIGHTS
+
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+    or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU Affero General Public License for more details.
+    You should have received a copy of the GNU Affero General Public License
+    along with this program; if not, see http://www.gnu.org/licenses or write to
+    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+    Boston, MA, 02110-1301 USA, or download the license from the following URL:
+    http://itextpdf.com/terms-of-use/
+
+    The interactive user interfaces in modified source and object code versions
+    of this program must display Appropriate Legal Notices, as required under
+    Section 5 of the GNU Affero General Public License.
+
+    In accordance with Section 7(b) of the GNU Affero General Public License,
+    a covered work must retain the producer line in every PDF that is created
+    or manipulated using iText.
+ */
 grammar PdfStream;
 
 // PARSER RULES --------------------------------------------------------------
@@ -91,7 +120,7 @@ color
             ;
 
         rgb
-            : NUMBER NUMBER NUMBER (STROKE_COLOUR_DEVICE_RGB | NON_STROKE_COLOUR_DEVICE_RGB)
+            : RGB_TOKEN
             ;
 
         cmyk
@@ -177,8 +206,8 @@ markedContentSequence
     ;
 
 markedContentPoint
-    : PDF_NAME ((MARKED_CONTENT_POINT) | dictionary ( MARKED_CONTENT_POINT_WITH_PROPERTIES ))
-//             (COMPATIBILITY | markedContent | generalGraphicsState | specialGraphicsState | color | textState | textObject | pathObject | shading | dobject | inlineImageObject)
+    : PDF_NAME ((MARKED_CONTENT_POINT) | ( dictionary ( MARKED_CONTENT_POINT_WITH_PROPERTIES )))
+             (COMPATIBILITY | markedContent | generalGraphicsState | specialGraphicsState | color | textState | textObject | pathObject | shading | dobject | inlineImageObject)
     ;
 
 pathConstruction
@@ -246,7 +275,7 @@ pathClipping
     ;
 
 inlineImageObject
-    : 'BI' (PDF_NAME (PDF_NAME | indirectReference | NUMBER | STRING | dictionary | array | 'true' | 'false' | 'null'))* INLINE_DATA
+    : 'BI' (PDF_NAME (PDF_NAME | INDIRECT_REF | NUMBER | STRING | dictionary | array | 'true' | 'false' | 'null'))* INLINE_DATA
     ;
 
 number
@@ -254,11 +283,11 @@ number
     ;
 
 array
-    : '[' (NUMBER | STRING | PDF_NAME | indirectReference | dictionary | array | 'true' | 'false' | 'null' )* ']'
+    : '[' (NUMBER | STRING | PDF_NAME | INDIRECT_REF | dictionary | array | 'true' | 'false' | 'null' )* ']'
     ;
 
 dictionary
-    : '<<' (PDF_NAME (PDF_NAME | indirectReference | NUMBER | STRING | dictionary | array | 'true' | 'false' | 'null'))* '>>'
+    : '<<' (PDF_NAME (PDF_NAME | INDIRECT_REF | NUMBER | STRING | dictionary | array | 'true' | 'false' | 'null'))* '>>'
     ;
 
 numberArray
@@ -278,8 +307,12 @@ stringPosArray
     : '[' ((STRING NUMBER) | STRING | NUMBER )*  ']'
     ;
 
-indirectReference
-    : NUMBER NUMBER 'R'
+INDIRECT_REF
+    : '0'..'9'+ WS '0'..'9'+ WS 'R'
+    ;
+
+RGB_TOKEN
+    : NUMBER WS NUMBER WS NUMBER WS (STROKE_COLOUR_DEVICE_RGB | NON_STROKE_COLOUR_DEVICE_RGB)
     ;
 
 // LEXER TOKENS --------------------------------------------------------------
@@ -404,12 +437,11 @@ DOT          : '.';
 // Primitive Objects
 STRING         : STRING_LITERAL | STRING_HEX;
 NUMBER         : INTEGER_NUMBER | REAL_NUMBER;
-INTEGER_NUMBER : '-'? DIGIT+;
+INTEGER_NUMBER : ('-' | '+' )? DIGIT+;
 fragment
 REAL_NUMBER    : '-'? ( (DIGIT+'.'DIGIT*) | (DIGIT*'.'DIGIT+) );
 fragment
 HEXDIGIT       : 'a'..'f' | 'A'..'F' | DIGIT;
-fragment
 DIGIT          : '0'..'9';
 COMMENT        : '%' ('\u0000'..'\u0009' | '\u000B' | '\u000C' | '\u000E'..'\uffff' )*;
 STRING_LITERAL : '('
