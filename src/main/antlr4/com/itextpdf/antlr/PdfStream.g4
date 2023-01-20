@@ -470,4 +470,4 @@ REGULAR_CHAR   : ('\u0001'..'\u0008'
 LETTER         : [A-Za-z];
 INLINE_DATA    : 'ID' .*? 'EI';
 COMPATIBILITY  : BEGIN_COMPATIBILITY_SECTION .*? END_COMPATIBILITY_SECTION;
-WS : [ \t\r\n]+ -> skip;
+WS : [ \t\r\n\u0000\u000C]+ -> skip;
