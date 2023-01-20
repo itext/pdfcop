@@ -60,7 +60,7 @@ public class DictionaryTest {
                 { "<</Key 1>>", true, 4 },
                 { "<</Key (Abcde)>>", true, 4 },
                 { "<</Key <AABBCC001122>>>", true, 4 },
-                { "<</Key 1 0 R>>", true, 4 },
+                { "<</Key 1 0 R>>", false, 4 },
                 { "<</Key <</Key /Value>>>>", true, 4 },
                 { "<</Key [0 1 2 3 4]>>", true, 4 },
                 { "<</Key /Value [0 1 2 3 4]>>", false, 0 },

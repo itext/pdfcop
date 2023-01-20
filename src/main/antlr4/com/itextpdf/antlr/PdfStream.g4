@@ -275,7 +275,7 @@ pathClipping
     ;
 
 inlineImageObject
-    : 'BI' (PDF_NAME (PDF_NAME | INDIRECT_REF | NUMBER | STRING | dictionary | array | 'true' | 'false' | 'null'))* INLINE_DATA
+    : 'BI' (PDF_NAME (PDF_NAME | NUMBER | STRING | dictionary | array | 'true' | 'false' | 'null'))* INLINE_DATA
     ;
 
 number
@@ -283,11 +283,11 @@ number
     ;
 
 array
-    : '[' (NUMBER | STRING | PDF_NAME | INDIRECT_REF | dictionary | array | 'true' | 'false' | 'null' )* ']'
+    : '[' (NUMBER | STRING | PDF_NAME | dictionary | array | 'true' | 'false' | 'null' )* ']'
     ;
 
 dictionary
-    : '<<' (PDF_NAME (PDF_NAME | INDIRECT_REF | NUMBER | STRING | dictionary | array | 'true' | 'false' | 'null'))* '>>'
+    : '<<' (PDF_NAME (PDF_NAME | NUMBER | STRING | dictionary | array | 'true' | 'false' | 'null'))* '>>'
     ;
 
 numberArray
@@ -305,10 +305,6 @@ comment
 
 stringPosArray
     : '[' ((STRING NUMBER) | STRING | NUMBER )*  ']'
-    ;
-
-INDIRECT_REF
-    : '0'..'9'+ WS '0'..'9'+ WS 'R'
     ;
 
 RGB_TOKEN
