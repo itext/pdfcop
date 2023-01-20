@@ -439,7 +439,7 @@ STRING         : STRING_LITERAL | STRING_HEX;
 NUMBER         : INTEGER_NUMBER | REAL_NUMBER;
 INTEGER_NUMBER : ('-' | '+' )? DIGIT+;
 fragment
-REAL_NUMBER    : '-'? ( (DIGIT+'.'DIGIT*) | (DIGIT*'.'DIGIT+) );
+REAL_NUMBER    : ('-' | '+' )? ( (DIGIT+'.'DIGIT*) | (DIGIT*'.'DIGIT+) );
 fragment
 HEXDIGIT       : 'a'..'f' | 'A'..'F' | DIGIT;
 DIGIT          : '0'..'9';
