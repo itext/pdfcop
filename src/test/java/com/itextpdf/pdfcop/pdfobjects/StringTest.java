@@ -60,7 +60,7 @@ public class StringTest {
                 { "(Hello World)", true, "(Hello World)" },
                 { "<AABB001122>", true, "<AABB001122>" },
                 { "(Hello World", false, "(Hello World)" },
-                { "<ABC>", false, "<ABC>" }
+                { "<ABC>", true, "<ABC>" }
         });
     }
 

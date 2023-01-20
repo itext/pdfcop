@@ -452,7 +452,7 @@ STRING_LITERAL : '('
                )*
                  ')'
                ;
-STRING_HEX     : '<' (HEXDIGIT HEXDIGIT)* '>';
+STRING_HEX     : '<' (HEXDIGIT)+ '>';
 REGULAR_CHAR   : ('\u0001'..'\u0008'
                | '\u000B'
                | '\u000E'..'\u0019'
