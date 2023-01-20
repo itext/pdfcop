@@ -275,7 +275,7 @@ pathClipping
     ;
 
 inlineImageObject
-    : 'BI' (PDF_NAME (PDF_NAME | NUMBER | STRING | dictionary | array | 'true' | 'false' | 'null'))* INLINE_DATA
+    : BEGIN_INLINE_IMAGE (PDF_NAME (PDF_NAME | NUMBER | STRING | dictionary | array | 'true' | 'false' | 'null'))* INLINE_DATA
     ;
 
 number
@@ -311,9 +311,13 @@ RGB_TOKEN
     : NUMBER WS NUMBER WS NUMBER WS (STROKE_COLOUR_DEVICE_RGB | NON_STROKE_COLOUR_DEVICE_RGB)
     ;
 
+
+
 // LEXER TOKENS --------------------------------------------------------------
 
 // Keywords
+INLINE_DATA    : BEGIN_INLINE_IMAGE_DATA WS .*? END_INLINE_IMAGE;
+
 // General Graphics State Keywords
 LINE_WIDTH                              : 'w';
 LINE_JOIN                               : 'j';
@@ -464,6 +468,5 @@ REGULAR_CHAR   : ('\u0001'..'\u0008'
                | '\u007E'..'\u00ff'
                );
 LETTER         : [A-Za-z];
-INLINE_DATA    : 'ID' .*? 'EI';
 COMPATIBILITY  : BEGIN_COMPATIBILITY_SECTION .*? END_COMPATIBILITY_SECTION;
 WS : [ \t\r\n\u0000\u000C]+ -> skip;
