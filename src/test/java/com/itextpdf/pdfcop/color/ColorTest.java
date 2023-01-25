@@ -49,7 +49,7 @@ public class ColorTest extends GroupingBaseTest {
                 { "0 G 1 0 0 RG", true, 2},
                 { "1 0 0 RG 0 G", true, 2},
                 { "0 G 1 0 0 RG 0 0 0 0 K", true, 3},
-                { "0 G 1 0 0 RG 0 0 0 0 K % Comment", true, 4}
+                { "0 G 1 0 0 RG 0 0 0 0 K % Comment", true, 3}
         });
     }
 

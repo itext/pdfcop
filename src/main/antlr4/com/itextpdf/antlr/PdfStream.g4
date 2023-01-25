@@ -443,7 +443,7 @@ REAL_NUMBER    : ('-' | '+' )? ( (DIGIT+'.'DIGIT*) | (DIGIT*'.'DIGIT+) );
 fragment
 HEXDIGIT       : 'a'..'f' | 'A'..'F' | DIGIT;
 DIGIT          : '0'..'9';
-COMMENT        : '%' ('\u0000'..'\u0009' | '\u000B' | '\u000C' | '\u000E'..'\uffff' )*;
+COMMENT        : '%' ('\u0000'..'\u0009' | '\u000B' | '\u000C' | '\u000E'..'\uffff' )* -> skip;
 STRING_LITERAL : '('
                (
                '\u0000'..'\u0027'
