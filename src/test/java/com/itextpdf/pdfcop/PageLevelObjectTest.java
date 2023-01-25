@@ -58,7 +58,7 @@ public class PageLevelObjectTest extends GroupingBaseTest {
                         "(Hello World) Tj\n" +
                         "ET\n" +
                         "%Comment insertion \n" +
-                        "Q", true, 5},
+                        "Q", true, 4},
                 { "/TouchUp_TextEdit MP\n" +
                         "BT\n" +
                         "/C2_8 7.019 Tf\n" +
@@ -112,7 +112,7 @@ public class PageLevelObjectTest extends GroupingBaseTest {
                         "36 789.33 Td\n" +
                         "(Hello World) Tj\n" +
                         "ET\n" +
-                        "Q", true, 6},
+                        "Q", true, 5},
                 {"0 0 0 rg\n" +
                         "[] 0 d\n" +
                         "1 w\n" +

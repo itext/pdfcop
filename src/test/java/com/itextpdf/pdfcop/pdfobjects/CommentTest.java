@@ -57,20 +57,20 @@ public class CommentTest {
     @Parameterized.Parameters
     public static Collection data() {
         return Arrays.asList(new Object[][] {
-                { "% This is a comment", true },
-                { "This is not a comment", false },
-                { "% Comment 0 G 1 0 0 RG 0 0 0 0 K", true}
+                { "% This is a comment", true, 0 },
+                { "This is not a comment", true, 1 },
+                { "% Comment 0 G 1 0 0 RG 0 0 0 0 K", true, 0}
         });
     }
 
     private String syntaxToCheck;
     private boolean pass;
-    private String value;
+    private int children;
 
-    public CommentTest(String syntaxToCheck, boolean pass) {
+    public CommentTest(String syntaxToCheck, boolean pass, int children) {
         this.syntaxToCheck = syntaxToCheck;
         this.pass = pass;
-        this.value = syntaxToCheck;
+        this.children = children;
     }
 
     @Test
@@ -88,16 +88,11 @@ public class CommentTest {
         streamParser.removeErrorListeners();
         streamParser.addErrorListener(ThrowingErrorListener.INSTANCE);
 
-        ParserRuleContext context = streamParser.comment();
-        int childCount = context.getChildCount();
-
-        Assert.assertEquals(1, childCount);
-
-        TerminalNode operand = (TerminalNode) context.getChild(0);
-
-        String actual = operand.getSymbol().getText();
-
-        Assert.assertEquals(this.value, actual);
+        if ( this.children == 0 ) {
+            Assert.assertEquals("<EOF>", streamParser.getCurrentToken().getText());
+        } else {
+            Assert.assertEquals("T", streamParser.getCurrentToken().getText());
+        }
     }
 
 }
